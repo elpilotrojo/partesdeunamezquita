@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partes de una mezquita. Córdoba</title>
+    <style>
+        /* Carga de la fuente OpenDyslexic */
+        @font-face {
+            font-family: 'OpenDyslexic';
+            src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@20160623-2/fonts/OpenDyslexic-Regular.otf') format('opentype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'OpenDyslexic';
+            src: url('https://cdn.jsdelivr.net/gh/antijingoist/opendyslexic@20160623-2/fonts/OpenDyslexic-Bold.otf') format('opentype');
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+            font-family: 'OpenDyslexic', sans-serif;
+            letter-spacing: -0.05em;
+        }
+
+        /* Estilos Base (Modo Claro) */
+        body {
+            background-color: #f1f5f9;
+            background-image: radial-gradient(#e2e8f0 1px, transparent 1px);
+            background-size: 20px 20px;
+            color: #0f172a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 0.75rem;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        /* Modo Oscuro (ACTIVADO POR DEFECTO EN BODY) */
+        body.dark-mode {
+            background-color: #090d16;
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            color: #f8fafc;
+        }
+
+        body.dark-mode h1 {
+            color: #ffffff;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        body.dark-mode .toolbar-card,
+        body.dark-mode .question-card,
+        body.dark-mode .map-container,
+        body.dark-mode .glossary-card,
+        body.dark-mode .game-over {
+            background: #111827;
+            border-color: #1f2937;
+            color: #f8fafc;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Modal en Modo Oscuro: Texto blanco sobre fondo negro */
+        body.dark-mode .modal-content {
+            background-color: #000000;
+            border-color: #374151;
+            color: #ffffff;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+        }
+
+        body.dark-mode .modal-header {
+            color: #38bdf8;
+        }
+
+        body.dark-mode .modal-body {
+            color: #ffffff;
+        }
+
+        body.dark-mode .badge {
+            background: #1f2937;
+            color: #38bdf8;
+            border-color: #0284c7;
+        }
+
+        body.dark-mode .question-label,
+        body.dark-mode .glossary-subtitle {
+            color: #9ca3af;
+        }
+
+        body.dark-mode .question-target,
+        body.dark-mode .glossary-title {
+            color: #38bdf8;
+        }
+
+        body.dark-mode .glossary-item {
+            background-color: #030712;
+            border-color: #1f2937;
+            color: #e5e7eb;
+        }
+
+        body.dark-mode .glossary-item:hover {
+            border-color: #38bdf8;
+            color: #38bdf8;
+            background-color: #111827;
+        }
+
+        body.dark-mode .game-over p {
+            color: #d1d5db;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 1.2rem;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        h1 {
+            font-size: 1.45rem;
+            font-weight: bold;
+            color: #0f172a;
+            margin-bottom: 0.85rem;
+            line-height: 1.25;
+            letter-spacing: -0.04em;
+        }
+
+        /* Tarjeta de Herramientas Superior */
+        .toolbar-card {
+            background-color: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 0.85rem;
+            padding: 0.55rem 0.85rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .btn-control {
+            border: none;
+            padding: 0.45rem 0.95rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.15s ease, filter 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn-control:hover {
+            transform: translateY(-1px);
+            filter: brightness(1.05);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+        }
+
+        /* Botón Idioma (Francia) */
+        .btn-lang-fr {
+            background: linear-gradient(90deg, #002395 0%, #002395 33.3%, #ffffff 33.3%, #ffffff 66.6%, #ed2939 66.6%, #ed2939 100%);
+            color: #000000;
+            text-shadow: 0px 0px 2px #ffffff;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Botón Idioma (España) */
+        .btn-lang-es {
+            background: linear-gradient(180deg, #aa151b 0%, #aa151b 25%, #f1bf00 25%, #f1bf00 75%, #aa151b 75%, #aa151b 100%);
+            color: #ffffff;
+            text-shadow: 0px 0px 3px #000000;
+            border: 1px solid #cbd5e1;
+        }
+
+        /* Botón Modo Oscuro */
+        .btn-theme {
+            background-color: #0f172a;
+            color: #f8fafc;
+            border: 1px solid #334155;
+        }
+
+        body.dark-mode .btn-theme {
+            background-color: #f8fafc;
+            color: #0f172a;
+            border-color: #cbd5e1;
+        }
+
+        /* Contador de Aciertos */
+        .badge {
+            background-color: #f0f9ff;
+            padding: 0.45rem 0.95rem;
+            border-radius: 0.5rem;
+            font-weight: bold;
+            font-size: 0.75rem;
+            border: 1px solid #bae6fd;
+            color: #0284c7;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Tarjeta de Pregunta Activa */
+        .question-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-left: 5px solid #0284c7;
+            border-radius: 0.85rem;
+            padding: 0.9rem 1.25rem;
+            box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+            margin-bottom: 1.1rem;
+            width: 100%;
+            max-width: 900px;
+            text-align: center;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .question-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            color: #64748b;
+            font-weight: bold;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.05em;
+        }
+
+        .question-target {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #0284c7;
+        }
+
+        /* Layout Principal */
+        .main-layout {
+            display: flex;
+            flex-direction: row;
+            gap: 1.25rem;
+            width: 100%;
+            max-width: 900px;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        .map-container {
+            position: relative;
+            flex: 1 1 450px;
+            max-width: 480px;
+            background: #ffffff;
+            border-radius: 0.85rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            padding: 0.65rem;
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .image-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .image-wrapper img {
+            width: 100%;
+            height: auto;
+            display: block;
+            border-radius: 0.4rem;
+        }
+
+        svg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hotspot {
+            cursor: pointer;
+        }
+
+        .hotspot circle {
+            fill: #0284c7;
+            stroke: #ffffff;
+            stroke-width: 2;
+            transition: fill 0.2s ease, stroke 0.2s ease, transform 0.2s ease;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+        }
+
+        .hotspot:hover circle {
+            fill: #0369a1;
+            transform: scale(1.2);
+        }
+
+        .hotspot.correct {
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .hotspot.correct circle {
+            fill: #16a34a;
+            stroke: #ffffff;
+        }
+
+        .hotspot.wrong circle {
+            fill: #dc2626;
+            stroke: #ffffff;
+        }
+
+        .icon-symbol {
+            font-family: system-ui, sans-serif;
+            font-weight: 900;
+            font-size: 9px;
+            fill: #ffffff;
+            text-anchor: middle;
+            dominant-baseline: central;
+            pointer-events: none;
+        }
+
+        /* Glosario Lateral */
+        .glossary-card {
+            flex: 1 1 280px;
+            max-width: 360px;
+            background: #ffffff;
+            border-radius: 0.85rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            padding: 1.15rem;
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .glossary-title {
+            font-size: 1.05rem;
+            font-weight: bold;
+            color: #0284c7;
+            margin-bottom: 0.2rem;
+        }
+
+        .glossary-subtitle {
+            font-size: 0.75rem;
+            color: #64748b;
+            margin-bottom: 0.9rem;
+        }
+
+        .glossary-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .glossary-item {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 0.65rem 0.9rem;
+            border-radius: 0.575rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #334155;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+        }
+
+        .glossary-item:hover {
+            background-color: #f0f9ff;
+            border-color: #0284c7;
+            color: #0284c7;
+            transform: translateX(3px);
+            box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+        }
+
+        /* Ventana Modal Sin Fotos */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border-radius: 0.85rem;
+            padding: 1.4rem 1.65rem;
+            max-width: 400px;
+            width: 100%;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .modal-header {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #0284c7;
+            margin-bottom: 0.75rem;
+        }
+
+        .modal-body {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #475569;
+            margin-bottom: 1.25rem;
+        }
+
+        .btn-modal-close {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 0.45rem 1.1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            float: right;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-modal-close:hover {
+            background-color: #0369a1;
+        }
+
+        /* Pantalla Final */
+        .game-over {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #ffffff;
+            border-radius: 0.85rem;
+            padding: 2.2rem 1.2rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: background-color 0.3s ease;
+        }
+
+        .game-over h2 {
+            font-size: 1.35rem;
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+        }
+
+        .game-over p {
+            color: #475569;
+            margin-bottom: 1.35rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-restart {
+            background-color: #0284c7;
+            color: #ffffff;
+            border: none;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.85rem;
+            font-weight: bold;
+            border-radius: 0.4rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-restart:hover {
+            background-color: #0369a1;
+        }
+
+        @media (max-width: 768px) {
+            .main-layout {
+                flex-direction: column;
+                align-items: center;
+            }
+            .map-container, .glossary-card {
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 400px) {
+            h1 { font-size: 1.1rem; }
+            .btn-control, .badge { font-size: 0.7rem; padding: 0.35rem 0.65rem; }
+            .question-target { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+
+    <header>
+        <h1 id="title-text">Partes de una mezquita. Córdoba</h1>
+        
+        <!-- Tarjeta de herramientas superior -->
+        <div class="toolbar-card">
+            <button class="btn-control btn-lang-fr" id="btn-language" onclick="toggleLanguage()">
+                <span id="lang-btn-text">Francés</span>
+            </button>
+            
+            <button class="btn-control btn-theme" id="btn-theme" onclick="toggleDarkMode()">
+                <span id="theme-btn-text">☀️ Modo Claro</span>
+            </button>
+
+            <div class="badge" id="score-counter">Aciertos: 0 / 6</div>
+        </div>
+    </header>
+
+    <div class="question-card" id="question-box">
+        <div class="question-label" id="question-label-text">Pulsa:</div>
+        <div class="question-target" id="target-name">¿Dónde está el Patio?</div>
+    </div>
+
+    <div class="main-layout" id="main-layout">
+        <!-- Contenedor del plano JPG original -->
+        <div class="map-container" id="map-wrapper">
+            <div class="image-wrapper">
+                <img src="MEZQUITA NUMERADA.jpg" alt="Plano Mezquita de Córdoba">
+                
+                <svg viewBox="0 0 300 400" id="mosque-svg">
+                    <!-- 1: Patio -->
+                    <g class="hotspot" data-id="1" transform="translate(172, 320)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-1"></text>
+                    </g>
+
+                    <!-- 2: Alminar -->
+                    <g class="hotspot" data-id="2" transform="translate(196, 372)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-2"></text>
+                    </g>
+
+                    <!-- 3: Sala de oración -->
+                    <g class="hotspot" data-id="3" transform="translate(189, 222)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-3"></text>
+                    </g>
+
+                    <!-- 4: Quibla -->
+                    <g class="hotspot" data-id="4" transform="translate(144, 30)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-4"></text>
+                    </g>
+
+                    <!-- 5: Mihrab -->
+                    <g class="hotspot" data-id="5" transform="translate(204, 30)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-5"></text>
+                    </g>
+
+                    <!-- 6: Maksura -->
+                    <g class="hotspot" data-id="6" transform="translate(204, 58)">
+                        <circle cx="0" cy="0" r="10" />
+                        <text class="icon-symbol" id="symbol-6"></text>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Glosario Lateral -->
+        <div class="glossary-card">
+            <div class="glossary-title" id="glossary-title">Glosario</div>
+            <div class="glossary-subtitle" id="glossary-subtitle">Toca un término para ver su función:</div>
+            <div class="glossary-list" id="glossary-list"></div>
+        </div>
+    </div>
+
+    <!-- Modal Emergente -->
+    <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+        <div class="modal-content" onclick="event.stopPropagation()">
+            <div class="modal-header" id="modal-title"></div>
+            <div class="modal-body" id="modal-body"></div>
+            <button class="btn-modal-close" onclick="closeModal()" id="btn-modal-close">Cerrar</button>
+        </div>
+    </div>
+
+    <!-- Pantalla Final -->
+    <div class="game-over" id="game-over-box">
+        <h2 id="win-title">¡Excelente trabajo! 🎉</h2>
+        <p id="win-text">Has identificado correctamente todas las partes de la Mezquita de Córdoba.</p>
+        <button class="btn-restart" id="btn-restart-text" onclick="resetGame()">Volver a jugar</button>
+    </div>
+
+    <script>
+        const translations = {
+            es: {
+                title: "Partes de una mezquita. Córdoba",
+                scoreText: "Aciertos",
+                selectLabel: "Pulsa:",
+                questionPrefix: "¿Dónde está",
+                winTitle: "¡Excelente trabajo! 🎉",
+                winText: "Has identificado correctamente todas las partes de la Mezquita de Córdoba.",
+                btnRestart: "Volver a jugar",
+                langBtnText: "Francés",
+                themeDark: "🌙 Modo Oscuro",
+                themeLight: "☀️ Modo Claro",
+                glossaryTitle: "Glosario",
+                glossarySubtitle: "Toca un término para ver su función:",
+                modalClose: "Cerrar",
+                elements: [
+                    { 
+                        id: 1, 
+                        name: "el Patio", 
+                        term: "Patio",
+                        desc: "Patio abierto con los naranjos y la fuente donde los musulmanes se lavan las manos y pies (abluciones) antes de rezar." 
+                    },
+                    { 
+                        id: 2, 
+                        name: "el Alminar", 
+                        term: "Alminar",
+                        desc: "Torre alta desde la que el muecín llama a los creyentes a la oración cinco veces al día." 
+                    },
+                    { 
+                        id: 3, 
+                        name: "la Sala de oración", 
+                        term: "Sala de oración",
+                        desc: "Gran sala cubierta llena de columnas y arcos donde la gente se reúne para rezar." 
+                    },
+                    { 
+                        id: 4, 
+                        name: "la Quibla", 
+                        term: "Quibla",
+                        desc: "Muro principal hacia el que se mira para rezar porque marca la dirección a La Meca." 
+                    },
+                    { 
+                        id: 5, 
+                        name: "el Mihrab", 
+                        term: "Mihrab",
+                        desc: "Hornacina o nicho decorado en el muro de la Quibla que indica el punto exacto hacia donde dirigir la oración." 
+                    },
+                    { 
+                        id: 6, 
+                        name: "la Maksura", 
+                        term: "Maksura",
+                        desc: "Zona protegida y reservada justo delante del Mihrab para que el califa rece seguro." 
+                    }
+                ]
+            },
+            fr: {
+                title: "Parties d'une mosquée. Cordoue",
+                scoreText: "Réponses correctes",
+                selectLabel: "Appuyez sur:",
+                questionPrefix: "Où se trouve",
+                winTitle: "Excellent travail! 🎉",
+                winText: "Vous avez identifié correctement toutes les parties de la Mosquée de Cordoue.",
+                btnRestart: "Rejouer",
+                langBtnText: "Español",
+                themeDark: "🌙 Mode Sombre",
+                themeLight: "☀️ Mode Clair",
+                glossaryTitle: "Glossaire",
+                glossarySubtitle: "Appuyez sur un terme pour voir sa fonction:",
+                modalClose: "Fermer",
+                elements: [
+                    { 
+                        id: 1, 
+                        name: "la Cour (Patio)", 
+                        term: "Cour (Patio)",
+                        desc: "Cour ouverte avec les orangers et la fontaine pour se laver (ablutions) avant la prière." 
+                    },
+                    { 
+                        id: 2, 
+                        name: "le Minaret (Alminar)", 
+                        term: "Minaret",
+                        desc: "Haute tour d'où le muezzin appelle les fidèles à la prière cinq fois par jour." 
+                    },
+                    { 
+                        id: 3, 
+                        name: "la Salle de prière", 
+                        term: "Salle de prière",
+                        desc: "Grande salle couverte avec des colonnes et des arches où l'on se rassemble pour prier." 
+                    },
+                    { 
+                        id: 4, 
+                        name: "la Qibla", 
+                        term: "Qibla",
+                        desc: "Mur principal vers lequel on se tourne pour prier car il indique la direction de La Mecque." 
+                    },
+                    { 
+                        id: 5, 
+                        name: "le Mihrab", 
+                        term: "Mihrab",
+                        desc: "Niche décorée dans le mur de la Qibla indiquant la direction exacte de la prière." 
+                    },
+                    { 
+                        id: 6, 
+                        name: "la Maqsura", 
+                        term: "Maqsura",
+                        desc: "Espace protégé et réservé devant le Mihrab pour que le calife prie en sécurité." 
+                    }
+                ]
+            }
+        };
+
+        let currentLang = 'es';
+        let isDarkMode = true;
+
+        let pendingQuestions = [];
+        let currentQuestion = null;
+        let score = 0;
+        let isProcessing = false;
+
+        function initGame() {
+            score = 0;
+            isProcessing = false;
+            pendingQuestions = [...translations[currentLang].elements];
+            pendingQuestions.sort(() => Math.random() - 0.5);
+
+            document.getElementById('main-layout').style.display = 'flex';
+            document.getElementById('question-box').style.display = 'block';
+            document.getElementById('game-over-box').style.display = 'none';
+
+            document.querySelectorAll('.hotspot').forEach(el => {
+                el.classList.remove('correct', 'wrong');
+                const id = el.getAttribute('data-id');
+                document.getElementById(`symbol-${id}`).textContent = '';
+            });
+
+            updateUI();
+            nextQuestion();
+        }
+
+        function updateUI() {
+            const t = translations[currentLang];
+            document.getElementById('title-text').textContent = t.title;
+            document.getElementById('question-label-text').textContent = t.selectLabel;
+            document.getElementById('score-counter').textContent = `${t.scoreText}: ${score} / ${t.elements.length}`;
+            document.getElementById('win-title').textContent = t.winTitle;
+            document.getElementById('win-text').textContent = t.winText;
+            document.getElementById('btn-restart-text').textContent = t.btnRestart;
+
+            // Glosario
+            document.getElementById('glossary-title').textContent = t.glossaryTitle;
+            document.getElementById('glossary-subtitle').textContent = t.glossarySubtitle;
+            document.getElementById('btn-modal-close').textContent = t.modalClose;
+
+            const glossaryContainer = document.getElementById('glossary-list');
+            glossaryContainer.innerHTML = '';
+            t.elements.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'glossary-item';
+                div.innerHTML = `<span>${item.term}</span> <span>ℹ️</span>`;
+                div.onclick = () => openModal(item.term, item.desc);
+                glossaryContainer.appendChild(div);
+            });
+
+            // Botón idioma
+            const langBtn = document.getElementById('btn-language');
+            const langBtnText = document.getElementById('lang-btn-text');
+            langBtnText.textContent = t.langBtnText;
+            if (currentLang === 'es') {
+                langBtn.className = 'btn-control btn-lang-fr';
+            } else {
+                langBtn.className = 'btn-control btn-lang-es';
+            }
+
+            // Botón tema
+            const themeBtnText = document.getElementById('theme-btn-text');
+            themeBtnText.textContent = isDarkMode ? t.themeLight : t.themeDark;
+        }
+
+        function openModal(title, text) {
+            document.getElementById('modal-title').textContent = title;
+            document.getElementById('modal-body').textContent = text;
+            document.getElementById('modal-overlay').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal-overlay').style.display = 'none';
+        }
+
+        function toggleLanguage() {
+            currentLang = (currentLang === 'es') ? 'fr' : 'es';
+            
+            if (currentQuestion) {
+                const currentId = currentQuestion.id;
+                currentQuestion = translations[currentLang].elements.find(e => e.id === currentId);
+            }
+            
+            pendingQuestions = pendingQuestions.map(q => 
+                translations[currentLang].elements.find(e => e.id === q.id)
+            );
+
+            updateUI();
+            if (currentQuestion) {
+                const t = translations[currentLang];
+                document.getElementById('target-name').textContent = `${t.questionPrefix} ${currentQuestion.name}?`;
+            }
+        }
+
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            updateUI();
+        }
+
+        function nextQuestion() {
+            if (pendingQuestions.length === 0) {
+                showGameOver();
+                return;
+            }
+
+            currentQuestion = pendingQuestions[0];
+            const t = translations[currentLang];
+            document.getElementById('target-name').textContent = `${t.questionPrefix} ${currentQuestion.name}?`;
+        }
+
+        function handleCircleClick(id) {
+            if (isProcessing) return;
+
+            const targetHotspot = document.querySelector(`.hotspot[data-id="${id}"]`);
+            const symbolText = document.getElementById(`symbol-${id}`);
+
+            if (targetHotspot.classList.contains('correct')) return;
+
+            if (id === currentQuestion.id) {
+                isProcessing = true;
+                score++;
+                updateUI();
+                
+                targetHotspot.classList.add('correct');
+                symbolText.textContent = '✓';
+
+                pendingQuestions.shift();
+
+                setTimeout(() => {
+                    isProcessing = false;
+                    nextQuestion();
+                }, 600);
+
+            } else {
+                isProcessing = true;
+                targetHotspot.classList.add('wrong');
+                symbolText.textContent = '✗';
+
+                setTimeout(() => {
+                    targetHotspot.classList.remove('wrong');
+                    symbolText.textContent = '';
+                    isProcessing = false;
+                }, 700);
+            }
+        }
+
+        function showGameOver() {
+            document.getElementById('main-layout').style.display = 'none';
+            document.getElementById('question-box').style.display = 'none';
+            document.getElementById('game-over-box').style.display = 'flex';
+        }
+
+        function resetGame() {
+            initGame();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.hotspot').forEach(el => {
+                el.addEventListener('click', () => {
+                    const id = parseInt(el.getAttribute('data-id'));
+                    handleCircleClick(id);
+                });
+            });
+
+            initGame();
+        });
+    </script>
+</body>
+</html>
